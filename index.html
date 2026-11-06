@@ -133,7 +133,7 @@ const P=[ // rank,key,title,pm,state,start,target,release
 [5,'RV2-84623','Unplug Elastic: remax.ca on Atlas','Jeff Hartman','Engineering In Progress','2026-11-02','2027-01-31',''],
 [5,'RV2-84624','Unplug Elastic: Global listings on Atlas','Jeff Hartman','Engineering In Progress','2026-11-02','2027-01-31',''],
 [6,'RV2-83730','Elastic to Datadog Monitoring','Nandu Padmanabhan','Engineering In Progress','2026-10-26','2026-11-20',''],
-[7,'RV2-84681','Retool Replacement','Meera Ramamoorthi','Engineering In Progress','2026-11-05','',''],
+[7,'RV2-84681','Retool Replacement','Meera Ramamoorthi','Engineering In Progress','2026-11-05','2026-12-08',''],
 [8,'RV2-81982','Self Serve Interfaces','Jeff Hartman','Engineering In Progress','2026-10-28','',''],
 [9,'RV2-84854','Pre-qual on HeyLeo','Meera Ramamoorthi','Waiting for Engineering','','',''],
 [10,'RV2-84853','Hey Leo on remax.ca','Meera Ramamoorthi','Waiting for Engineering','','',''],
@@ -158,11 +158,11 @@ const B=[ // key,title,pm,state,engStart,covers
 ['RV2-79032','.CA FrontEnd','Jeff Hartman','Engineering In Progress','2026-09-30','REMAX .ca engineering tickets'],
 ['RV2-79034','Leads','Meera Ramamoorthi','Engineering In Progress','2026-09-18','REMAX leads engineering tickets'],
 ['RV2-82138','Global on remax.com','Jeff Hartman','Engineering In Progress','2026-09-08','Global (non-US) listings work on remax.com'],
+['RV2-84458','QA Regression','Nandu Padmanabhan','Engineering In Progress','2026-11-02','Regression testing for the REMAX team'],
 ['RV2-78686','Performance','Jeff Hartman','To Do','','Product performance engineering tickets'],
 ['RV2-78688','API/Middleware','Jeff Hartman','To Do','','API and middleware engineering tickets'],
 ['RV2-78689','User Persona/Notification','Jeff Hartman','To Do','','User persona and notification engineering tickets'],
-['RV2-78687','RMN','Jeff Hartman','To Do','','RMN engineering tickets'],
-['RV2-84458','QA Regression','Nandu Padmanabhan','Engineering In Progress','2026-11-02','Regression testing for the REMAX team']
+['RV2-78687','RMN','Jeff Hartman','To Do','','RMN engineering tickets']
 ];
 const cls=s=>({'Done':'Done','Engineering In Progress':'EIP','In Progress':'IP','Blocked':'Blocked','To Do':'Todo','Waiting for Engineering':'Wait','Submitted':'Submitted','Vision and Scope':'VS','Requirements & Design':'RD'}[s]||'Submitted');
 const pill=s=>`<span class="pill s-${cls(s)}">${s}</span>`;
