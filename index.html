@@ -41,8 +41,8 @@ h1{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,5vw,40px);m
 .row>div{padding:9px 10px;min-width:0}
 .row.head{border-top:0;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .row.head .axis{padding:0;position:relative;height:30px}
-.row.tag{border-top:0}
-.row.tag>div{padding:0;height:24px;position:relative}
+.pw{position:relative;padding-top:30px}
+.todaytag{position:absolute;top:0;left:0;height:30px;border-left:2px solid var(--today);padding-left:6px;font-family:var(--f-mono);font-weight:600;font-size:12px;line-height:14px;color:var(--today);white-space:nowrap;z-index:3}
 .rank{font-family:var(--f-mono);font-weight:500;text-align:center}
 .t{font-weight:500}
 .key{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
@@ -107,7 +107,7 @@ a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
 <section>
   <h2>Projects in ranked order</h2>
   <p class="sub" id="psub"></p>
-  <div class="panel scroll"><div class="grid" id="grid"></div></div>
+  <div class="pw" id="pw"><div class="todaytag" id="tt">Nov 5</div><div class="panel scroll" id="ps"><div class="grid" id="grid"></div></div></div>
 </section>
 
 <section>
@@ -173,7 +173,7 @@ const months=['2026-09-01','2026-10-01','2026-11-01','2026-12-01','2027-01-01'],
 const grid=document.getElementById('grid');
 const gl=months.map(m=>`<i class="gl" style="left:${pct(m)}%"></i>`).join('');
 const todayEl=`<i class="today" style="left:${pct(TODAY)}%"></i>`;
-const head=`<div class="row tag"><div></div><div></div><div></div><div></div><div><i class="today" style="left:${pct(TODAY)}%"></i><span class="todaylab" style="left:${pct(TODAY)}%;top:5px">Nov 5</span></div></div><div class="row head"><div>Rank</div><div>Project</div><div>Product Manager</div><div>State</div><div class="axis">${months.map((m,i)=>`<i class="gl" style="left:${pct(m)}%"></i><span class="ml" style="left:${pct(m)}%;top:8px">${mn[i]}</span>`).join('')}</div></div>`;
+const head=`<div class="row head"><div>Rank</div><div>Project</div><div>Product Manager</div><div>State</div><div class="axis">${months.map((m,i)=>`<i class="gl" style="left:${pct(m)}%"></i><span class="ml" style="left:${pct(m)}%;top:8px">${mn[i]}</span>`).join('')}</div></div>`;
 const sel=new Set();
 const show=s=>!sel.size||sel.has(s);
 function drawGrid(){
@@ -210,9 +210,21 @@ fb.addEventListener('click',e=>{
   const b=e.target.closest('button[data-s]');if(!b)return;
   const s=b.dataset.s;
   if(!s)sel.clear();else if(sel.has(s))sel.delete(s);else sel.add(s);
-  drawFilters();drawGrid();drawBau();
+  drawFilters();drawGrid();drawBau();placeTag();
 });
-drawFilters();drawGrid();drawBau();
+function placeTag(){
+  const ax=grid.querySelector('.row.head .axis'),pw=document.getElementById('pw'),ps=document.getElementById('ps'),tt=document.getElementById('tt');
+  if(!ax)return;
+  const a=ax.getBoundingClientRect(),w=pw.getBoundingClientRect(),p=ps.getBoundingClientRect();
+  const x=a.left-w.left+a.width*pct(TODAY)/100;
+  tt.style.left=x+'px';
+  const abs=w.left+x;
+  tt.style.visibility=(abs>=p.left&&abs<=p.right-60)?'visible':'hidden';
+}
+window.addEventListener('resize',placeTag);
+document.getElementById('ps').addEventListener('scroll',placeTag);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(placeTag);
+drawFilters();drawGrid();drawBau();placeTag();
 </script>
 </body>
 </html>
