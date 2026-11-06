@@ -1,4 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>REMAX Roadmap</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -6,15 +11,15 @@
 /* Layout: ranked project rows with a Sep 2026 to Jan 2027 timeline on the right, BAU container epics as a table below. */
 :root{
   --bg:#f5f6f8; --surface:#ffffff; --fg:#14213d; --muted:#5d6b82; --line:#dde2ea;
-  --done:#2f6fde; --eng:#1e6b52; --eng-soft:#b7e1cd; --wait:#f1c232; --blocked:#f4cccc; --blocked-fg:#8c2f2f; --sub:#d9d9d9; --today:#d1495b; --todo:#f1c232;
+  --done:#2f6fde; --eng:#1e6b52; --eng-soft:#b7e1cd; --wait:#f1c232; --blocked:#f4cccc; --blocked-fg:#8c2f2f; --sub:#d9d9d9; --today:#d1495b; --todo:#f1c232; --vs:#fce5cd; --rd:#cfe2f3; --wfe:#d9d2e9;
   --f-display:'Fraunces',Georgia,serif; --f-body:'IBM Plex Sans',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0f1626; --surface:#18223a; --fg:#e8ecf4; --muted:#93a0b8; --line:#2b3855;
-  --done:#6b9bf2; --eng:#4fb68f; --eng-soft:#2c5a49; --wait:#d9ad2b; --blocked:#5a2d33; --blocked-fg:#f2b3b3; --sub:#4a5468; --today:#ef6b7e; --todo:#d9ad2b; color-scheme:dark}}
+  --done:#6b9bf2; --eng:#4fb68f; --eng-soft:#2c5a49; --wait:#d9ad2b; --blocked:#5a2d33; --blocked-fg:#f2b3b3; --sub:#4a5468; --today:#ef6b7e; --todo:#d9ad2b; --vs:#6b4a2c; --rd:#2c4a6b; --wfe:#54447a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1626; --surface:#18223a; --fg:#e8ecf4; --muted:#93a0b8; --line:#2b3855;
-  --done:#6b9bf2; --eng:#4fb68f; --eng-soft:#2c5a49; --wait:#d9ad2b; --blocked:#5a2d33; --blocked-fg:#f2b3b3; --sub:#4a5468; --today:#ef6b7e; --todo:#d9ad2b; color-scheme:dark}
+  --done:#6b9bf2; --eng:#4fb68f; --eng-soft:#2c5a49; --wait:#d9ad2b; --blocked:#5a2d33; --blocked-fg:#f2b3b3; --sub:#4a5468; --today:#ef6b7e; --todo:#d9ad2b; --vs:#6b4a2c; --rd:#2c4a6b; --wfe:#54447a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:14px;line-height:1.45;
   padding-block:28px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
@@ -44,8 +49,11 @@ h1{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,5vw,40px);m
 .s-Done{background:var(--done);color:#fff}
 .s-EIP,.s-IP{background:var(--eng-soft);color:var(--fg)}
 .s-Blocked{background:var(--blocked);color:var(--blocked-fg)}
-.s-Todo,.s-Wait{background:var(--wait);color:#14213d}
+.s-Todo{background:var(--wait);color:#14213d}
+.s-Wait{background:var(--wfe);color:var(--fg)}
 .s-Submitted{background:var(--sub);color:var(--fg)}
+.s-VS{background:var(--vs);color:var(--fg)}
+.s-RD{background:var(--rd);color:var(--fg)}
 .tl{position:relative;height:36px;padding:0!important}
 .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
 .ml{position:absolute;top:6px;font-size:10.5px;color:var(--muted);padding-left:4px;font-family:var(--f-mono)}
@@ -63,12 +71,23 @@ td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
 td.num,.mono{font-family:var(--f-mono);font-size:12.5px;font-variant-numeric:tabular-nums}
 a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
 .foot{color:var(--muted);font-size:12px}
+.filters{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.filters .lab{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-right:4px}
+.chip{font:inherit;font-size:12.5px;font-weight:500;color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 12px;cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.chip .n{font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+.chip:hover{border-color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.chip[aria-pressed="true"] .n{color:var(--bg);opacity:.75}
+.chip:focus-visible{outline:2px solid var(--done);outline-offset:2px}
+.empty{padding:22px 16px;color:var(--muted);border-top:1px solid var(--line)}
 </style>
 
+</head>
+<body>
 <div class="wrap">
 <header>
   <div>
-    <h1>REMAX Roadmap</h1>
+    <h1>RealREMAX Roadmap</h1>
     <div class="meta" id="meta"></div>
   </div>
   <div class="legend">
@@ -80,6 +99,8 @@ a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
     <span><i class="todayk"></i>Today</span>
   </div>
 </header>
+
+<div class="filters" id="filters" role="group" aria-label="Filter by status"></div>
 
 <section>
   <h2>Projects in ranked order</h2>
@@ -93,32 +114,34 @@ a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
   <div class="panel scroll"><table id="bau"></table></div>
 </section>
 
-<p class="foot">Source: the REMAX_Roadmap Google Sheet, mirrored from YouTrack epics. Snapshot of 3 Nov 2026. Rankings are set by the product team.</p>
+<p class="foot">Source: the REMAX_Roadmap Google Sheet, mirrored from YouTrack epics. Snapshot of 5 Nov 2026. Rankings are set by the product team.</p>
 </div>
 
 <script>
 const BASE='https://realbrokerage.youtrack.cloud/issue/';
-const TODAY='2026-11-03';
+const TODAY='2026-11-05';
 const P=[ // rank,key,title,pm,state,start,target,release
 [1,'RV2-79177','Leads | ORM | remax.com lead delivery','Meera Ramamoorthi','Done','2026-09-28','2026-10-14','2026-10-14'],
 [2,'RV2-82321','Repair Estimate Service (BOSSCAT replacement)','Nandu Padmanabhan','Done','2026-10-09','2026-10-12','2026-10-12'],
-[3,'LEO-2720','.ca French Hard-coding, off Localize','Jeff Hartman','In Progress','2026-10-05','2026-10-16','2026-10-16'],
+[3,'RV2-84846','.ca French Hard-coding, off Localize','Jeff Hartman','Engineering In Progress','2026-10-01','2026-10-16','2026-10-16'],
 [3,'RV2-82117','Remove Localize from remax.com','Jeff Hartman','Engineering In Progress','2026-10-12','2026-10-16','2026-10-16'],
-[4,'LEO-2715','HeyLeo on remax.com - MVP','Meera Ramamoorthi','In Progress','2026-10-08','2026-11-02',''],
+[4,'RV2-84844','HeyLeo on remax.com - MVP','Meera Ramamoorthi','Done','2026-10-06','2026-11-02','2026-11-03'],
+[4,'RV2-84810','HeyLeo on remax.com - Post Launch/Widget','Meera Ramamoorthi','Engineering In Progress','2026-11-05','2026-11-20',''],
 [5,'RV2-79333','Unplug Elastic: remax.com / remax.ca on Atlas (program epic)','Jeff Hartman','Engineering In Progress','2026-10-27','2027-01-31',''],
-[5,'RV2-84623','Unplug Elastic: remax.ca on Atlas','Jeff Hartman','To Do','','',''],
-[5,'RV2-84624','Unplug Elastic: Global listings on Atlas','Jeff Hartman','To Do','','',''],
-[6,'RV2-83730','Elastic to Datadog Monitoring','Nandu Padmanabhan','Engineering In Progress','2026-10-26','',''],
-[7,'LEO-2712','Pre-qual on HeyLeo','Meera Ramamoorthi','To Do','','',''],
-[8,'LEO-2723','Hey Leo on remax.ca','Meera Ramamoorthi','To Do','','',''],
-[9,'RV2-81581','PostHog Migration','Jeff Hartman','Waiting for Engineering','','',''],
-[10,'RV2-81982','Self Serve Interfaces','Jeff Hartman','Engineering In Progress','2026-10-28','',''],
+[5,'RV2-84623','Unplug Elastic: remax.ca on Atlas','Jeff Hartman','To Do','','2027-01-31',''],
+[5,'RV2-84624','Unplug Elastic: Global listings on Atlas','Jeff Hartman','To Do','','2027-01-31',''],
+[6,'RV2-83730','Elastic to Datadog Monitoring','Nandu Padmanabhan','Engineering In Progress','2026-10-26','2026-11-20',''],
+[7,'RV2-84681','Retool Replacement','Meera Ramamoorthi','Waiting for Engineering','','',''],
+[8,'RV2-84854','Pre-qual on HeyLeo','Meera Ramamoorthi','To Do','','',''],
+[8,'RV2-81982','Self Serve Interfaces','Jeff Hartman','Engineering In Progress','2026-10-28','',''],
+[9,'RV2-84853','Hey Leo on remax.ca','Meera Ramamoorthi','To Do','','',''],
+[10,'RV2-81581','PostHog Migration','Jeff Hartman','Waiting for Engineering','','',''],
 [11,'LEO-2734','Commercial Listings on remax.com','Jeff Hartman','To Do','','',''],
-[11,'RV2-84295','Replace Percy with Deal Machine','Meera Ramamoorthi','Submitted','','',''],
-[12,'RV2-80110','RGL | Google Tag Manager, GA4 and TrustArc on Golf Lifestyles pages','Tim Kraus','Blocked','','',''],
-[12,'RV2-84681','Retool Replacement','Meera Ramamoorthi','Waiting for Engineering','','',''],
-[13,'LEO-2714','R4 | Luxury Updates','Jeff Hartman','To Do','','',''],
-[14,'LEO-2722','Rental Lead Routing','Meera Ramamoorthi','To Do','','','']
+[12,'RV2-84295','Replace Percy with Deal Machine','Meera Ramamoorthi','Submitted','','',''],
+[13,'RV2-84851','R4 | Luxury Updates','Jeff Hartman','Vision and Scope','','',''],
+[14,'LEO-2722','Rental Lead Routing','Meera Ramamoorthi','To Do','','',''],
+[15,'RV2-80110','RGL | Google Tag Manager, GA4 and TrustArc on Golf Lifestyles pages','Tim Kraus','Blocked','','',''],
+[15,'RV2-84802','CRM-Based Marketing Landing Page','Jeff Hartman','Submitted','','','']
 ];
 const B=[ // key,title,pm,state,engStart,covers
 ['RV2-78690','Infrastructure','Jeff Hartman','Engineering In Progress','2026-10-08','REMAX infrastructure engineering tickets'],
@@ -126,7 +149,7 @@ const B=[ // key,title,pm,state,engStart,covers
 ['RV2-84698','.ca | Localize - Post Launch','Jeff Hartman','Waiting for Engineering','2026-10-19','.ca post-launch Localize bug fixes and stories'],
 ['RV2-77917','SEO','Tim Kraus','Engineering In Progress','2026-09-09','Parent SEO epic for REMAX'],
 ['RV2-80232','.ca CRO | Lead Conversion Program','Jeff Hartman','Engineering In Progress','2026-10-05','CRO program for remax.ca, French first'],
-['LEO-2726','.com CRO | Lead Conversion Program','Jeff Hartman','In Progress','2026-10-01','Listing lead form, lead counting and follow-up prompts on remax.com'],
+['RV2-84856','.com CRO | Lead Conversion Program','Jeff Hartman','Engineering In Progress','2026-10-01','Listing lead form, lead counting and follow-up prompts on remax.com'],
 ['RV2-82461','SKY | MXC','Nick Tart','Engineering In Progress','2026-10-15','SKY feature and bug tickets'],
 ['RV2-83746','Repair Estimate Security Fixes & Misc. Enhancements','Nandu Padmanabhan','Engineering In Progress','2026-10-23','Follow-on work after the Repair Estimate Service launch'],
 ['RV2-79031','.COM FrontEnd','Jeff Hartman','Engineering In Progress','2026-09-29','REMAX .com engineering tickets'],
@@ -139,7 +162,7 @@ const B=[ // key,title,pm,state,engStart,covers
 ['RV2-78687','RMN','Jeff Hartman','To Do','','RMN engineering tickets'],
 ['RV2-84458','QA Regression','Nandu Padmanabhan','Engineering In Progress','2026-11-02','Regression testing for the REMAX team']
 ];
-const cls=s=>({'Done':'Done','Engineering In Progress':'EIP','In Progress':'IP','Blocked':'Blocked','To Do':'Todo','Waiting for Engineering':'Wait','Submitted':'Submitted'}[s]||'Submitted');
+const cls=s=>({'Done':'Done','Engineering In Progress':'EIP','In Progress':'IP','Blocked':'Blocked','To Do':'Todo','Waiting for Engineering':'Wait','Submitted':'Submitted','Vision and Scope':'VS','Requirements & Design':'RD'}[s]||'Submitted');
 const pill=s=>`<span class="pill s-${cls(s)}">${s}</span>`;
 const link=k=>`<a href="${BASE}${k}" target="_blank" rel="noopener">${k}</a>`;
 const D=s=>Date.parse(s+'T00:00:00Z');
@@ -148,21 +171,46 @@ const months=['2026-09-01','2026-10-01','2026-11-01','2026-12-01','2027-01-01'],
 const grid=document.getElementById('grid');
 const gl=months.map(m=>`<i class="gl" style="left:${pct(m)}%"></i>`).join('');
 const todayEl=`<i class="today" style="left:${pct(TODAY)}%"></i>`;
-let h=`<div class="row head"><div>Rank</div><div>Project</div><div>Product Manager</div><div>State</div><div class="axis">${months.map((m,i)=>`<i class="gl" style="left:${pct(m)}%"></i><span class="ml" style="left:${pct(m)}%;top:8px">${mn[i]}</span>`).join('')}<i class="today" style="left:${pct(TODAY)}%"></i><span class="todaylab" style="left:${pct(TODAY)}%;top:16px">Nov 3</span></div></div>`;
-for(const [r,k,t,pm,s,st,tg,fr] of P){
+const head=`<div class="row head"><div>Rank</div><div>Project</div><div>Product Manager</div><div>State</div><div class="axis">${months.map((m,i)=>`<i class="gl" style="left:${pct(m)}%"></i><span class="ml" style="left:${pct(m)}%;top:8px">${mn[i]}</span>`).join('')}<i class="today" style="left:${pct(TODAY)}%"></i><span class="todaylab" style="left:${pct(TODAY)}%;top:16px">Nov 5</span></div></div>`;
+const sel=new Set();
+const show=s=>!sel.size||sel.has(s);
+function drawGrid(){
+let h=head;
+const rows=P.filter(p=>show(p[4]));
+for(const [r,k,t,pm,s,st,tg,fr] of rows){
   let m='';
   if(st&&tg){const c=s==='Done'?'var(--done)':'var(--eng)';m=`<i class="bar" style="left:${pct(st)}%;width:${Math.max(pct(tg)-pct(st),0.8)}%;background:${c}"></i>`;}
   else if(st){m=`<i class="bar open" style="left:${pct(st)}%;width:${pct(TODAY)-pct(st)+14}%"></i>`;}
+  else if(tg){m=`<i class="tbd" style="left:${pct(TODAY)}%;width:${pct(tg)-pct(TODAY)}%">Start TBD · target ${tg.slice(5)}</i>`;}
   else{m=`<i class="tbd" style="left:${pct(TODAY)+1}%;width:12%">Dates TBD</i>`;}
   if(fr)m+=`<i class="fr" style="left:${pct(fr)}%"></i>`;
   h+=`<div class="row"><div class="rank">${r}</div><div><div class="t">${t}</div><div class="key">${link(k)}</div></div><div>${pm}</div><div>${pill(s)}</div><div class="tl">${gl}${todayEl}${m}</div></div>`;
 }
-grid.innerHTML=h;
-document.getElementById('meta').innerHTML=`${P.length} project epics and ${B.length} container epics tracked · Status as of 3 Nov 2026 · <a href="https://docs.google.com/spreadsheets/d/1s1AvUCUrg3QJK7f45YPnjww1meQwbgdZawvLdnVnTLY" target="_blank" rel="noopener">Open the sheet</a>`;
+grid.innerHTML=rows.length?h:h+'<div class="empty">No project epics with this status.</div>';
+}
+document.getElementById('meta').innerHTML=`${P.length} project epics and ${B.length} container epics tracked · Status as of 5 Nov 2026 · <a href="https://docs.google.com/spreadsheets/d/1s1AvUCUrg3QJK7f45YPnjww1meQwbgdZawvLdnVnTLY" target="_blank" rel="noopener">Open the sheet</a>`;
 const done=P.filter(p=>p[4]==='Done').length,blk=P.filter(p=>p[4]==='Blocked').length;
 document.getElementById('psub').textContent=`${done} done, ${P.filter(p=>/In Progress/.test(p[4])).length} in engineering, ${blk} blocked. Equal ranks mean the epics are worked together.`;
+function drawBau(){
+const rows=B.filter(b=>show(b[3]));
 document.getElementById('bau').innerHTML=`<thead><tr><th>Epic</th><th>Product Manager</th><th>State</th><th>Eng Start</th><th>What it covers</th></tr></thead><tbody>`+
-B.map(([k,t,pm,s,es,c])=>`<tr><td><div class="t">${t}</div><div class="key">${link(k)}</div></td><td>${pm}</td><td>${pill(s)}</td><td class="num">${es||'Not set'}</td><td>${c}</td></tr>`).join('')+`</tbody>`;
+(rows.length?rows:[null]).map(r=>!r?`<tr><td colspan="5" style="color:var(--muted)">No container epics with this status.</td></tr>`:(([k,t,pm,s,es,c])=>`<tr><td><div class="t">${t}</div><div class="key">${link(k)}</div></td><td>${pm}</td><td>${pill(s)}</td><td class="num">${es||'Not set'}</td><td>${c}</td></tr>`)(r)).join('')+`</tbody>`;
+}
+const ORDER=['Engineering In Progress','Waiting for Engineering','Vision and Scope','Requirements & Design','To Do','Submitted','Blocked','Done'];
+const cnt={};[...P.map(p=>p[4]),...B.map(b=>b[3])].forEach(s=>cnt[s]=(cnt[s]||0)+1);
+const fb=document.getElementById('filters');
+function drawFilters(){
+  const all=P.length+B.length;
+  fb.innerHTML=`<span class="lab">Status</span><button class="chip" type="button" data-s="" aria-pressed="${!sel.size}">All <span class="n">${all}</span></button>`+
+  ORDER.filter(s=>cnt[s]).map(s=>`<button class="chip" type="button" data-s="${s}" aria-pressed="${sel.has(s)}">${s} <span class="n">${cnt[s]}</span></button>`).join('');
+}
+fb.addEventListener('click',e=>{
+  const b=e.target.closest('button[data-s]');if(!b)return;
+  const s=b.dataset.s;
+  if(!s)sel.clear();else if(sel.has(s))sel.delete(s);else sel.add(s);
+  drawFilters();drawGrid();drawBau();
+});
+drawFilters();drawGrid();drawBau();
 </script>
-
-</body></html>
+</body>
+</html>
