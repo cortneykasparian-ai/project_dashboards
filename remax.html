@@ -107,7 +107,7 @@ a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
     <span><i class="dia"></i>Feature release</span>
     <span><i class="todayk"></i>Today</span>
   </div>
-  <div class="pw" id="pw"><div class="todaytag" id="tt">Nov 5</div><div class="panel scroll" id="ps"><div class="grid" id="grid"></div></div></div>
+  <div class="pw" id="pw"><div class="todaytag" id="tt">Nov 10</div><div class="panel scroll" id="ps"><div class="grid" id="grid"></div></div></div>
 </section>
 
 <section>
@@ -116,12 +116,12 @@ a:focus-visible{outline:2px solid var(--done);outline-offset:2px}
   <div class="panel scroll"><table id="bau"></table></div>
 </section>
 
-<p class="foot">Source: the REMAX_Roadmap Google Sheet, mirrored from YouTrack epics. Snapshot of 5 Nov 2026. Rankings are set by the product team.</p>
+<p class="foot">Source: the REMAX_Roadmap Google Sheet, mirrored from YouTrack epics. Snapshot of 10 Nov 2026. Rankings are set by the product team.</p>
 </div>
 
 <script>
 const BASE='https://realbrokerage.youtrack.cloud/issue/';
-const TODAY='2026-11-05';
+const TODAY='2026-11-10';
 const P=[ // rank,key,title,pm,state,start,target,release
 [1,'RV2-79177','Leads | ORM | remax.com lead delivery','Meera Ramamoorthi','Done','2026-09-28','2026-10-14','2026-10-14'],
 [2,'RV2-82321','Repair Estimate Service (BOSSCAT replacement)','Nandu Padmanabhan','Done','2026-10-09','2026-10-12','2026-10-12'],
@@ -138,10 +138,10 @@ const P=[ // rank,key,title,pm,state,start,target,release
 [9,'RV2-84854','Pre-qual on HeyLeo','Meera Ramamoorthi','Waiting for Engineering','','',''],
 [10,'RV2-84853','Hey Leo on remax.ca','Meera Ramamoorthi','Waiting for Engineering','','',''],
 [11,'RV2-81581','PostHog Migration','Jeff Hartman','Waiting for Engineering','','',''],
-[12,'LEO-2734','Commercial Listings on remax.com','Jeff Hartman','To Do','','',''],
+[12,'RV2-85139','Commercial Listings on remax.com','Unassigned','Submitted','','',''],
 [13,'RV2-84295','Replace Percy with Deal Machine','Meera Ramamoorthi','Submitted','','',''],
 [14,'RV2-84851','R4 | Luxury Updates','Jeff Hartman','Vision and Scope','','',''],
-[15,'LEO-2722','Rental Lead Routing','Meera Ramamoorthi','To Do','','',''],
+[15,'RV2-85202','Rental Lead Routing','Meera Ramamoorthi','Submitted','','',''],
 [16,'RV2-80110','RGL | Google Tag Manager, GA4 and TrustArc on Golf Lifestyles pages','Tim Kraus','Blocked','','',''],
 [17,'RV2-84802','CRM-Based Marketing Landing Page','Jeff Hartman','Submitted','','','']
 ];
@@ -190,7 +190,7 @@ for(const [r,k,t,pm,s,st,tg,fr] of rows){
 }
 grid.innerHTML=rows.length?h:h+'<div class="empty">No project epics with this status.</div>';
 }
-document.getElementById('meta').innerHTML=`${P.length} project epics and ${B.length} container epics tracked · Status as of 5 Nov 2026 · <a class="sheetbtn" href="https://docs.google.com/spreadsheets/d/1s1AvUCUrg3QJK7f45YPnjww1meQwbgdZawvLdnVnTLY" target="_blank" rel="noopener">Open the sheet <span aria-hidden="true">↗</span></a>`;
+document.getElementById('meta').innerHTML=`${P.length} project epics and ${B.length} container epics tracked · Status as of 10 Nov 2026 · <a class="sheetbtn" href="https://docs.google.com/spreadsheets/d/1s1AvUCUrg3QJK7f45YPnjww1meQwbgdZawvLdnVnTLY" target="_blank" rel="noopener">Open the sheet <span aria-hidden="true">↗</span></a>`;
 const done=P.filter(p=>p[4]==='Done').length,blk=P.filter(p=>p[4]==='Blocked').length;
 document.getElementById('psub').textContent=`${done} done, ${P.filter(p=>/In Progress/.test(p[4])).length} in engineering, ${blk} blocked. Equal ranks mean the epics are worked together.`;
 function drawBau(){
